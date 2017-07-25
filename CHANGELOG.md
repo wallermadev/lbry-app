@@ -15,6 +15,7 @@ Web UI version numbers should always match the corresponding version of LBRY App
   * Use randomly colored tiles when image is missing from metadata
   * Added a loading message to file actions
   * URL is auto suggested in Publish Page
+  * Added a tipping button to send LBRY Credits to the publisher
 
 ### Changed
   * Publishes now uses claims rather than files
