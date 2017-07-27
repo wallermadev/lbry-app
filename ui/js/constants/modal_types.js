@@ -6,3 +6,6 @@ export const INSUFFICIENT_CREDITS = "insufficient_credits";
 export const UPGRADE = "upgrade";
 export const WELCOME = "welcome";
 export const FIRST_REWARD = "first_reward";
+export const TRANSACTION_SUCCESSFUL = "transaction_successful";
+export const TRANSACTION_FAILED = "transaction_failed";
+export const INSUFFICIENT_BALANCE = "insufficient_balance";
