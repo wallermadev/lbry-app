@@ -9,6 +9,7 @@ Web UI version numbers should always match the corresponding version of LBRY App
 ## [Unreleased]
 ### Added
   * Added support for tipping content creators
+  * Added claim support button and inline form to file page.
 
 ### Changed
   *

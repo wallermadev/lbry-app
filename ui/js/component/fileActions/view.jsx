@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon, BusyMessage } from "component/common";
-import FilePrice from "component/filePrice";
 import TipLink from "component/tipLink";
+import { FormField } from "component/form";
 import { Modal } from "component/modal";
 import Link from "component/link";
 import { ToolTip } from "component/tooltip";
@@ -66,9 +66,62 @@ class FileActions extends React.PureComponent {
   }
 
   handleTipHide() {
+      this.setState({
+          showTipBox: false,
+      });
+  }
+
+  onSupportClaimClicked(event) {
+    if (this.state.showSupportClaimForm) {
+      return;
+    }
+
+    let button;
+    let parentCard;
+    if ("a" === event.target.tagName.toLowerCase()) {
+      button = event.target;
+    }
+
+    let parent = event.target.parentElement;
+    do {
+      if (!button && "a" === parent.tagName.toLowerCase()) {
+        button = parent;
+      }
+
+      if ("card" === parent.className.trim()) {
+        parentCard = parent;
+      }
+      parent = parent.parentElement;
+    } while (parent && !parentCard);
+
     this.setState({
-      showTipBox: false,
+      showSupportClaimForm: true,
+      supportClaimLinkOffset: button && parentCard
+        ? button.getBoundingClientRect().left -
+            parentCard.getBoundingClientRect().left -
+            12 /* left pad + icon */
+        : 0,
     });
+  }
+
+  sendSupportClaim() {
+    this.setState({ supportInProgress: true });
+    const { claim, setClaimSupport, claimNewSupport } = this.props;
+    setClaimSupport(claim.claim_id, claim.name);
+    claimNewSupport();
+  }
+
+  onClaimSupportSuccessful() {
+    this.setState({
+      showSupportClaimForm: false,
+    });
+    this.onClaimSupportCompleted();
+  }
+
+  onClaimSupportCompleted() {
+    this.props.closeModal();
+    this.setState({ supportInProgress: false });
+>>>>>>> 6de2f7dda18b16ae454f799f2908f7184d366f49
   }
 
   render() {
@@ -88,6 +141,8 @@ class FileActions extends React.PureComponent {
       loading,
       claimIsMine,
       claimInfo,
+      amount,
+      setAmount,
     } = this.props;
 
     const { showTipBox } = this.state;
@@ -203,6 +258,45 @@ class FileActions extends React.PureComponent {
               />
             </DropDownMenu>
           : ""}
+        <Link
+          label={__("Support Claim")}
+          button="text"
+          style={{ position: "relative" }}
+          icon="icon-life-ring"
+          onClick={this.onSupportClaimClicked.bind(this)}
+        />
+        {this.state.showSupportClaimForm &&
+          <div
+            className="file-actions__support_claim"
+            style={{ marginLeft: this.state.supportClaimLinkOffset + "px" }}
+          >
+            <form onSubmit={this.sendSupportClaim.bind(this)}>
+              <FormField
+                type="number"
+                min="0.01"
+                placeholder="0.01"
+                step="0.01"
+                postfix="LBC"
+                className="form-field__input--inline"
+                onChange={setAmount}
+              />
+              <div className="file-actions__inline-buttons">
+                <Link
+                  button="primary"
+                  label={__("Confirm")}
+                  onClick={this.sendSupportClaim.bind(this)}
+                  disabled={
+                    !(parseFloat(amount) > 0.0) || this.state.supportInProgress
+                  }
+                />
+                <Link
+                  button="cancel"
+                  label={__("Cancel")}
+                  onClick={() => this.setState({ showSupportClaimForm: false })}
+                />
+              </div>
+            </form>
+          </div>}
         <Modal
           type="confirm"
           isOpen={modal == "affirmPurchase"}
@@ -229,6 +323,34 @@ class FileActions extends React.PureComponent {
             outpoint={fileInfo.outpoint}
             title={title}
           />}
+        {modal == "insufficientBalance" &&
+          <Modal
+            isOpen={true}
+            contentLabel={__("Insufficient balance")}
+            onConfirmed={this.onClaimSupportCompleted.bind(this)}
+          >
+            {__(
+              "Insufficient balance: after supporting this claim, you would have less than 1 LBC in your wallet."
+            )}
+          </Modal>}
+        {modal == "transactionSuccessful" &&
+          <Modal
+            isOpen={true}
+            contentLabel={__("Transaction successful")}
+            onConfirmed={this.onClaimSupportSuccessful.bind(this)}
+          >
+            {__(
+              "Your claim support transaction was successfully placed in the queue."
+            )}
+          </Modal>}
+        {modal == "transactionFailed" &&
+          <Modal
+            isOpen={true}
+            contentLabel={__("Transaction failed")}
+            onConfirmed={this.onClaimSupportCompleted.bind(this)}
+          >
+            {__("Something went wrong")}:
+          </Modal>}
       </section>
     );
   }
