@@ -1,6 +1,7 @@
 import React from "react";
 import { Icon, BusyMessage } from "component/common";
 import FilePrice from "component/filePrice";
+import TipLink from "component/tipLink";
 import { Modal } from "component/modal";
 import Link from "component/link";
 import { ToolTip } from "component/tooltip";
@@ -13,6 +14,7 @@ class FileActions extends React.PureComponent {
     super(props);
     this.state = {
       forceShowActions: false,
+      showTipBox: false,
     };
   }
 
@@ -57,6 +59,18 @@ class FileActions extends React.PureComponent {
     this.props.loadVideo(this.props.uri);
   }
 
+  handleTipShow() {
+    this.setState({
+      showTipBox: true,
+    });
+  }
+
+  handleTipHide() {
+    this.setState({
+      showTipBox: false,
+    });
+  }
+
   render() {
     const {
       fileInfo,
@@ -73,7 +87,10 @@ class FileActions extends React.PureComponent {
       costInfo,
       loading,
       claimIsMine,
+      claimInfo,
     } = this.props;
+
+    const { showTipBox } = this.state;
 
     const metadata = fileInfo ? fileInfo.metadata : null,
       openInFolderMessage = platform.startsWith("Mac")
@@ -165,8 +182,14 @@ class FileActions extends React.PureComponent {
 
     return (
       <section className="file-actions">
-        {content}
-        {showMenu
+        {showTipBox ? "" : content}
+        <TipLink
+          onTipShow={this.handleTipShow.bind(this)}
+          onTipHide={this.handleTipHide.bind(this)}
+          showTipBox={showTipBox}
+          address={claimInfo.address}
+        />
+        {showMenu && !showTipBox
           ? <DropDownMenu>
               <DropDownMenuItem
                 key={0}

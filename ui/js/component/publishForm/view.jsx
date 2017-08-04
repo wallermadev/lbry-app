@@ -1,7 +1,7 @@
 import React from "react";
 import lbry from "lbry";
 import lbryuri from "lbryuri";
-import { FormField, FormRow } from "component/form.js";
+import { FormField, FormRow } from "component/form";
 import Link from "component/link";
 import Modal from "component/modal";
 import { BusyMessage } from "component/common";
