@@ -36,13 +36,17 @@ class SettingsPage extends React.PureComponent {
     setTimeout(clear, 1000, { once: true });
   }
 
+  onApiHostChanged(event) {
+    this.setClientSetting("api_host", event.target.value);
+  }
+
   setDaemonSetting(name, value) {
     this.props.setDaemonSetting(name, value);
   }
 
   setClientSetting(name, value) {
     lbry.setClientSetting(name, value);
-    this._onSettingSaveSuccess();
+    // this._onSettingSaveSuccess();
   }
 
   onRunOnStartChange(event) {
@@ -215,6 +219,23 @@ class SettingsPage extends React.PureComponent {
               label={__(
                 "Help make LBRY better by contributing diagnostic data about my usage"
               )}
+            />
+          </div>
+        </section>
+
+        <section className="card">
+          <div className="card__content">
+            <h3>{__("API Config")}</h3>
+          </div>
+          <div className="card__content">
+            <FormRow
+              type="text"
+              label={__("Host")}
+              defaultValue={this.props.apiHost}
+              helper={__(
+                "Enter a different host or IP address here if you are running the daemon remotely."
+              )}
+              onChange={this.onApiHostChanged.bind(this)}
             />
           </div>
         </section>

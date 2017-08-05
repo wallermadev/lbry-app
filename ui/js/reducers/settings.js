@@ -6,6 +6,9 @@ const defaultState = {
   clientSettings: {
     showNsfw: lbry.getClientSetting("showNsfw"),
   },
+  daemonSettings: {
+    apiHost: "localhost",
+  },
 };
 
 reducers[types.DAEMON_SETTINGS_RECEIVED] = function(state, action) {

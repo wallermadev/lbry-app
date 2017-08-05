@@ -30,7 +30,7 @@ const LATEST_RELEASE_API_URL = 'https://api.github.com/repos/lbryio/lbry-app/rel
 const DAEMON_PATH = process.env.LBRY_DAEMON || path.join(__dirname, 'dist', 'lbrynet-daemon');
 
 let client = jayson.client.http({
-  host: 'localhost',
+  host: '139.59.245.7',
   port: 5279,
   path: '/lbryapi',
   timeout: 1000

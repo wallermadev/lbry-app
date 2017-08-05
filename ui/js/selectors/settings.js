@@ -21,3 +21,8 @@ export const selectShowNsfw = createSelector(
   selectClientSettings,
   clientSettings => !!clientSettings.showNsfw
 );
+
+export const selectApiHost = createSelector(
+  selectDaemonSettings,
+  daemonSettings => daemonSettings.apiHost || "localhost"
+);

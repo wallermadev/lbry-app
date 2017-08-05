@@ -9,7 +9,7 @@ const menu = remote.require("./menu/main-menu");
 
 let lbry = {
   isConnected: false,
-  daemonConnectionString: "http://localhost:5279/lbryapi",
+  daemonConnectionString: "http://139.59.245.7:5279/lbryapi",
   pendingPublishTimeout: 20 * 60 * 1000,
   defaultClientSettings: {
     showNsfw: false,
