@@ -8,23 +8,22 @@ import {
 } from "selectors/file_info";
 import { makeSelectIsAvailableForUri } from "selectors/availability";
 import { selectCurrentModal } from "selectors/app";
+import {
+  makeSelectClaimForUriIsMine,
+  makeSelectClaimForUri,
+  selectClaimSupportAmount,
+} from "selectors/claims";
 import { makeSelectCostInfoForUri } from "selectors/cost_info";
 import { doCloseModal, doOpenModal } from "actions/app";
 import { doFetchAvailability } from "actions/availability";
 import { doOpenFileInShell, doOpenFileInFolder } from "actions/file_info";
 import {
-  makeSelectClaimForUriIsMine,
-  makeSelectClaimForUri,
-} from "selectors/claims";
-import { doPurchaseUri, doLoadVideo, doStartDownload } from "actions/content";
-import FileActions from "./view";
-import { makeSelectClaimForUri } from "selectors/claims";
-import {
   doClaimNewSupport,
   doSetClaimSupportAmount,
   doSetClaimSupportClaim,
 } from "actions/claims";
-import { selectClaimSupportAmount } from "selectors/claims";
+import { doPurchaseUri, doLoadVideo, doStartDownload } from "actions/content";
+import FileActions from "./view";
 
 const makeSelect = () => {
   const selectClaim = makeSelectClaimForUri();

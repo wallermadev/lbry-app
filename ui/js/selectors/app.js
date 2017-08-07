@@ -119,6 +119,11 @@ export const selectCurrentModal = createSelector(
   state => state.modal
 );
 
+export const selectCurrentModalParams = createSelector(
+  _selectState,
+  state => state.modalParams
+);
+
 export const selectDownloadProgress = createSelector(
   _selectState,
   state => state.downloadProgress

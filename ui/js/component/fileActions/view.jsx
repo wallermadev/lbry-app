@@ -66,9 +66,9 @@ class FileActions extends React.PureComponent {
   }
 
   handleTipHide() {
-      this.setState({
-          showTipBox: false,
-      });
+    this.setState({
+      showTipBox: false,
+    });
   }
 
   onSupportClaimClicked(event) {
@@ -121,7 +121,6 @@ class FileActions extends React.PureComponent {
   onClaimSupportCompleted() {
     this.props.closeModal();
     this.setState({ supportInProgress: false });
->>>>>>> 6de2f7dda18b16ae454f799f2908f7184d366f49
   }
 
   render() {
@@ -253,7 +252,12 @@ class FileActions extends React.PureComponent {
               />
               <DropDownMenuItem
                 key={1}
-                onClick={() => openModal(modals.CONFIRM_FILE_REMOVE)}
+                onClick={() =>
+                  openModal(modals.CONFIRM_FILE_REMOVE, {
+                    uri,
+                    title,
+                    outpoint: fileInfo.outpoint,
+                  })}
                 label={__("Remove...")}
               />
             </DropDownMenu>
@@ -317,40 +321,6 @@ class FileActions extends React.PureComponent {
         >
           {__("LBRY was unable to download the stream")} <strong>{uri}</strong>.
         </Modal>
-        {modal == modals.CONFIRM_FILE_REMOVE &&
-          <ModalRemoveFile
-            uri={uri}
-            outpoint={fileInfo.outpoint}
-            title={title}
-          />}
-        {modal == "insufficientBalance" &&
-          <Modal
-            isOpen={true}
-            contentLabel={__("Insufficient balance")}
-            onConfirmed={this.onClaimSupportCompleted.bind(this)}
-          >
-            {__(
-              "Insufficient balance: after supporting this claim, you would have less than 1 LBC in your wallet."
-            )}
-          </Modal>}
-        {modal == "transactionSuccessful" &&
-          <Modal
-            isOpen={true}
-            contentLabel={__("Transaction successful")}
-            onConfirmed={this.onClaimSupportSuccessful.bind(this)}
-          >
-            {__(
-              "Your claim support transaction was successfully placed in the queue."
-            )}
-          </Modal>}
-        {modal == "transactionFailed" &&
-          <Modal
-            isOpen={true}
-            contentLabel={__("Transaction failed")}
-            onConfirmed={this.onClaimSupportCompleted.bind(this)}
-          >
-            {__("Something went wrong")}:
-          </Modal>}
       </section>
     );
   }
