@@ -111,7 +111,7 @@ class FilePage extends React.PureComponent {
               {!fileInfo || fileInfo.written_bytes <= 0
                 ? <span style={{ float: "right" }}>
                     <FilePrice uri={lbryuri.normalize(uri)} />
-                    {isRewardContent && <span>{" "}<IconFeatured /></span> }
+                    {isRewardContent && <span>{" "}<IconFeatured /></span>}
                   </span>
                 : null}
               <h1>{title}</h1>
@@ -125,9 +125,9 @@ class FilePage extends React.PureComponent {
                     </Link>
                   : uriIndicator}
               </div>
-              <div className="card__actions">
-                <FileActions uri={uri} />
-              </div>
+            </div>
+            <div className="card__actions">
+              <FileActions uri={uri} />
             </div>
             <div className="card__content card__subtext card__subtext card__subtext--allow-newlines">
               <ReactMarkdown

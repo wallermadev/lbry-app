@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "component/link";
 import { FormField } from "component/form";
-import PriceForm from "component/priceForm";
+import FormFieldPrice from "component/formFieldPrice";
 
 class TipLink extends React.PureComponent {
   constructor(props) {
@@ -66,7 +66,7 @@ class TipLink extends React.PureComponent {
 
     let tipBox = (
       <span>
-        <PriceForm
+        <FormFieldPrice
           isTip={true}
           min="0.01"
           placeholder="1.00"

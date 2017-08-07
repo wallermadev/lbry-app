@@ -1,3 +1,4 @@
+export const CONFIRM_FILE_PURCHASE = "confirmFilePurchase";
 export const CONFIRM_FILE_REMOVE = "confirmFileRemove";
 export const INCOMPATIBLE_DAEMON = "incompatibleDaemon";
 export const DOWNLOADING = "downloading";

@@ -54,7 +54,7 @@ const selectClaimForUriIsMine = (state, props) => {
   const claim = selectClaimsByUri(state)[uri];
   const myClaims = selectMyClaimsRaw(state);
 
-  return myClaims.has(claim.claim_id);
+  return claim ? myClaims.has(claim.claim_id) : false;
 };
 
 export const makeSelectClaimForUriIsMine = () => {

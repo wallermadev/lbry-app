@@ -3,6 +3,7 @@ import lbryuri from "lbryuri.js";
 import CardMedia from "component/cardMedia";
 import Link from "component/link";
 import { TruncatedText } from "component/common.js";
+import FileActions from "component/fileActions";
 import FilePrice from "component/filePrice";
 import NsfwOverlay from "component/nsfwOverlay";
 import IconFeatured from "component/iconFeatured";
@@ -53,12 +54,13 @@ class FileTile extends React.PureComponent {
   render() {
     const {
       claim,
-      metadata,
-      isResolvingUri,
-      showEmpty,
-      navigate,
+      hideActions,
       hidePrice,
+      isResolvingUri,
+      metadata,
+      navigate,
       rewardedContentClaimIds,
+      showEmpty,
     } = this.props;
 
     const uri = lbryuri.normalize(this.props.uri);
@@ -71,7 +73,8 @@ class FileTile extends React.PureComponent {
       ? metadata.thumbnail
       : null;
     const obscureNsfw = this.props.obscureNsfw && metadata && metadata.nsfw;
-    const isRewardContent = claim && rewardedContentClaimIds.includes(claim.claim_id);
+    const isRewardContent =
+      claim && rewardedContentClaimIds.includes(claim.claim_id);
 
     let onClick = () => navigate("/show", { uri });
 
@@ -103,26 +106,38 @@ class FileTile extends React.PureComponent {
         onMouseEnter={this.handleMouseOver.bind(this)}
         onMouseLeave={this.handleMouseOut.bind(this)}
       >
-        <Link onClick={onClick} className="card__link">
+        <div onClick={onClick} className="card__link">
           <div className={"card__inner file-tile__row"}>
             <CardMedia title={title} thumbnail={thumbnail} />
             <div className="file-tile__content">
               <div className="card__title-primary">
                 {!hidePrice ? <FilePrice uri={this.props.uri} /> : null}
-                {isRewardContent && <IconFeatured /> }
+                {isRewardContent && <IconFeatured />}
                 <div className="meta">{uri}</div>
                 <h3>
                   <TruncatedText lines={1}>{title}</TruncatedText>
                 </h3>
               </div>
-              <div className="card__content card__subtext">
-                <TruncatedText lines={3}>
-                  {description}
-                </TruncatedText>
-              </div>
+              {description &&
+                <div className="card__content card__subtext">
+                  <TruncatedText lines={hideActions ? 4 : 2}>
+                    {description}
+                  </TruncatedText>
+                </div>}
+              {!hideActions &&
+                <div className="card__actions card__actions--bottom">
+                  <FileActions
+                    onClick={e => {
+                      console.log("prevent");
+                      console.log(e);
+                      e.stopPropagation();
+                    }}
+                    uri={uri}
+                  />
+                </div>}
             </div>
           </div>
-        </Link>
+        </div>
         {this.state.showNsfwHelp && <NsfwOverlay />}
       </section>
     );

@@ -1,9 +1,10 @@
 @import "../global";
 
-$height-file-tile: $spacing-vertical * 6;
+$height-file-tile: $spacing-vertical * 6.67;
 .file-tile__row {
   overflow: hidden;
   height: $height-file-tile;
+  position: relative;
   .credit-amount {
     float: right;
   }
@@ -26,4 +27,15 @@ $height-file-tile: $spacing-vertical * 6;
   .card__title-primary {
     margin-top: 0;
   }
+  /*
+  .card__actions--bottom {
+    position: absolute;
+    width: 100%;
+    bottom: $spacing-vertical * 1/3;
+  }
+  */
+}
+
+.file-actions__delete-button {
+  float: right;
 }

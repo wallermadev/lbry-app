@@ -26,6 +26,7 @@ class SearchPage extends React.PureComponent {
               </h3>
               <FileTile
                 uri={lbryuri.normalize(query)}
+                hideActions={true}
                 showEmpty={FileTile.SHOW_EMPTY_PUBLISH}
               />
             </section>

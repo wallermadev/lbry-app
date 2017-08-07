@@ -8,7 +8,7 @@ import ModalWelcome from "component/modalWelcome";
 import ModalFirstReward from "component/modalFirstReward";
 import * as modals from "constants/modal_types";
 
-class App extends React.PureComponent {
+class ModalRouter extends React.PureComponent {
   componentWillMount() {
     this.showWelcome(this.props);
   }
@@ -51,6 +51,8 @@ class App extends React.PureComponent {
         return <ModalTransactionFailed />;
       case modals.INSUFFICIENT_BALANCE:
         return <ModalInsufficientBalance />;
+      default:
+        return null;
     }
   }
 }

@@ -76,6 +76,15 @@ $button-focus-shift: 12%;
     margin: 0 $padding-text-link;
   }
 }
+.button-text-alt
+{
+  @include text-link($color-text-dark);
+  display: inline-block;
+
+  .button__content {
+    margin: 0 $padding-text-link;
+  }
+}
 .button-text-help
 {
   @include text-link(#aaa);

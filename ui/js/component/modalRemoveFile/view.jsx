@@ -39,7 +39,8 @@ class ModalRemoveFile extends React.PureComponent {
         onAborted={closeModal}
       >
         <p>
-          {__("Are you sure you'd like to remove")} <cite>{title}</cite>{" "}
+          {__("Are you sure you'd like to remove")}{" "}
+          {title ? <cite>{title}</cite> : __("this file")}{" "}
           {__("from LBRY?")}
         </p>
 
