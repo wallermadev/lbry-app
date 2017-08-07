@@ -13,47 +13,6 @@ class FileActions extends React.PureComponent {
     };
   }
 
-  componentWillMount() {
-    this.checkAvailability(this.props.uri);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.checkAvailability(nextProps.uri);
-    this.restartDownload(nextProps);
-  }
-
-  restartDownload(props) {
-    const { downloading, fileInfo, uri, restartDownload } = props;
-
-    if (
-      !downloading &&
-      fileInfo &&
-      !fileInfo.completed &&
-      fileInfo.written_bytes !== false &&
-      fileInfo.written_bytes < fileInfo.total_bytes
-    ) {
-      restartDownload(uri, fileInfo.outpoint);
-    }
-  }
-
-  checkAvailability(uri) {
-    if (!this._uri || uri !== this._uri) {
-      this._uri = uri;
-      this.props.checkAvailability(uri);
-    }
-  }
-
-  onShowFileActionsRowClicked() {
-    this.setState({
-      forceShowActions: true,
-    });
-  }
-
-  onAffirmPurchase() {
-    this.props.closeModal();
-    this.props.loadVideo(this.props.uri);
-  }
-
   handleTipShow() {
     this.setState({
       showTipBox: true,
