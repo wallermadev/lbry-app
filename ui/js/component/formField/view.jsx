@@ -29,7 +29,11 @@ class FormField extends React.PureComponent {
   }
 
   componentWillMount() {
-    if (["text", "number", "radio", "checkbox"].includes(this.props.type)) {
+    if (
+      ["text", "number", "radio", "checkbox", "password"].includes(
+        this.props.type
+      )
+    ) {
       this._element = "input";
       this._type = this.props.type;
     } else if (this.props.type == "text-number") {
