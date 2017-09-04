@@ -9,6 +9,7 @@ import {
 import { doFetchDaemonSettings } from "actions/settings";
 import { doAuthenticate } from "actions/user";
 import { doFileList } from "actions/file_info";
+import { doNavigate } from "actions/navigation";
 
 const { remote, ipcRenderer, shell } = require("electron");
 const path = require("path");
@@ -215,5 +216,27 @@ export function doChangeVolume(volume) {
         volume,
       },
     });
+  };
+}
+
+export function doAddBookmark(uri, listName) {
+  return function(dispatch, getState) {
+    dispatch({
+      type: types.BOOKMARK_ADDED,
+      data: { uri, listName },
+    });
+    dispatch(doCloseModal());
+  };
+}
+
+export function doAddBookmarkList(listName) {
+  const bookmarkList = { title: listName, bookmarks: [] };
+  return function(dispatch, getState) {
+    dispatch({
+      type: types.BOOKMARK_LIST_ADDED,
+      data: { bookmarkList },
+    });
+    dispatch(doCloseModal());
+    dispatch(doNavigate("/bookmarks", { list: listName }));
   };
 }

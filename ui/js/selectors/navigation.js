@@ -103,6 +103,8 @@ export const selectPageTitle = createSelector(
         return __("Publishes");
       case "discover":
         return __("Home");
+      case "bookmarks":
+        return __("Bookmarks");
       case false:
       case null:
       case "":

@@ -15,6 +15,7 @@ const defaultState = {
   hasSignature: false,
   badgeNumber: 0,
   volume: sessionStorage.getItem("volume") || 1,
+  bookmarks: [{ title: "favorites", bookmarks: [] }],
 };
 
 reducers[types.DAEMON_READY] = function(state, action) {
@@ -147,6 +148,27 @@ reducers[types.VOLUME_CHANGED] = function(state, action) {
   return Object.assign({}, state, {
     volume: action.data.volume,
   });
+};
+
+reducers[types.BOOKMARK_LIST_ADDED] = function(state, action) {
+  const { bookmarks } = state;
+  const { bookmarkList } = action.data;
+  bookmarks.push(bookmarkList);
+  return Object.assign({}, state, { bookmarks });
+};
+
+reducers[types.BOOKMARK_ADDED] = function(state, action) {
+  const { bookmarks } = state;
+  const { uri, listName } = action.data;
+
+  const updateBookmarks = bookmarks.map((list, index) => {
+    if (list.title === listName) {
+      list.bookmarks.push(uri);
+    }
+    return list;
+  });
+
+  return Object.assign({}, state, { bookmarks: updateBookmarks });
 };
 
 export default function reducer(state = defaultState, action) {

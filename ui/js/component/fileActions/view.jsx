@@ -6,6 +6,7 @@ import Link from "component/link";
 import { ToolTip } from "component/tooltip";
 import { DropDownMenu, DropDownMenuItem } from "component/menu";
 import ModalRemoveFile from "modal/modalRemoveFile";
+import ModalAddBookmark from "modal/modalAddBookmark";
 import * as modals from "constants/modal_types";
 
 class FileActions extends React.PureComponent {
@@ -73,6 +74,7 @@ class FileActions extends React.PureComponent {
       costInfo,
       loading,
       claimIsMine,
+      addBookmark,
     } = this.props;
 
     const metadata = fileInfo ? fileInfo.metadata : null,
@@ -163,6 +165,18 @@ class FileActions extends React.PureComponent {
       console.log("handle this case of file action props?");
     }
 
+    const MenuDownload = (
+      <div className="button-set-item">
+        <DropDownMenu>
+          <DropDownMenuItem
+            key={0}
+            onClick={() => openModal(modals.CONFIRM_BOOKMARK_ADD)}
+            label={__("Add to bookmarks")}
+          />
+        </DropDownMenu>
+      </div>
+    );
+
     return (
       <section className="file-actions">
         {content}
@@ -171,17 +185,22 @@ class FileActions extends React.PureComponent {
               <DropDownMenu>
                 <DropDownMenuItem
                   key={0}
+                  onClick={() => openModal(modals.CONFIRM_BOOKMARK_ADD)}
+                  label={__("Add to bookmarks")}
+                />
+                <DropDownMenuItem
+                  key={1}
                   onClick={() => openInFolder(fileInfo)}
                   label={openInFolderMessage}
                 />
                 <DropDownMenuItem
-                  key={1}
+                  key={2}
                   onClick={() => openModal(modals.CONFIRM_FILE_REMOVE)}
                   label={__("Remove...")}
                 />
               </DropDownMenu>
             </div>
-          : ""}
+          : MenuDownload}
         <Modal
           type="confirm"
           isOpen={modal == "affirmPurchase"}
@@ -209,6 +228,7 @@ class FileActions extends React.PureComponent {
             outpoint={fileInfo.outpoint}
             title={title}
           />}
+        {modal == modals.CONFIRM_BOOKMARK_ADD && <ModalAddBookmark uri={uri} />}
       </section>
     );
   }

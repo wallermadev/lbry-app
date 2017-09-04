@@ -70,6 +70,14 @@ export const Header = props => {
       </div>
       <div className="header__item">
         <Link
+          onClick={() => navigate("/bookmarks")}
+          button="alt button--flat"
+          icon="icon-bookmark"
+          title={__("Bookmarks")}
+        />
+      </div>
+      <div className="header__item">
+        <Link
           onClick={() => navigate("/settings")}
           button="alt button--flat"
           icon="icon-gear"

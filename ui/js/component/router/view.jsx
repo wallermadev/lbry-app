@@ -18,6 +18,7 @@ import SearchPage from "page/search";
 import AuthPage from "page/auth";
 import InvitePage from "page/invite";
 import BackupPage from "page/backup";
+import BookmarksPage from "page/bookmarks";
 
 const route = (page, routesMap) => {
   const component = routesMap[page];
@@ -48,6 +49,7 @@ const Router = props => {
     settings: <SettingsPage params={params} />,
     show: <ShowPage params={params} />,
     wallet: <WalletPage params={params} />,
+    bookmarks: <BookmarksPage params={params} />,
   });
 };
 

@@ -74,6 +74,8 @@ export const selectWunderBarIcon = createSelector(selectCurrentPage, page => {
       return "icon-code";
     case "discover":
       return "icon-home";
+    case "bookmarks":
+      return "icon-bookmark";
     default:
       return "icon-file";
   }

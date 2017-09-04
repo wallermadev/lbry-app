@@ -107,3 +107,26 @@ export const selectCurrentLanguage = createSelector(
 );
 
 export const selectVolume = createSelector(_selectState, state => state.volume);
+
+export const selectBookmarkLists = createSelector(_selectState, state =>
+  state.bookmarks.map(list => list.title)
+);
+
+export const selectBookmarks = createSelector(
+  _selectState,
+  state => state.bookmarks
+);
+
+export const selectCurrentBookmarkList = (state, props) => {
+  const listName = props.params.list || "favorites",
+    bookmarkList = selectBookmarks(state).find(list => list.title === listName);
+
+  return bookmarkList;
+};
+
+export const makeSelectCurrentBookmarList = () => {
+  return createSelector(
+    selectCurrentBookmarkList,
+    bookmarkList => bookmarkList
+  );
+};
