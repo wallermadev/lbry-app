@@ -39,6 +39,7 @@ let lbry = {
     customLighthouseServers: [],
     showDeveloperMenu: false,
     language: "en",
+    instantPurchaseMax: null,
   },
 };
 

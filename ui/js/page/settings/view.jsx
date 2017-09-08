@@ -15,9 +15,15 @@ class SettingsPage extends React.PureComponent {
 
     const { daemonSettings } = this.props || {};
 
+    const instantPurchaseMax = lbry.getClientSetting(
+      "instant_purchase_max"
+    ) || { currency: "LBC", amount: 0.1 };
+
     this.state = {
       // isMaxUpload: daemonSettings && daemonSettings.max_upload != 0,
       // isMaxDownload: daemonSettings && daemonSettings.max_download != 0,
+      instantPurchaseMaxEnabled: instantPurchaseMax !== null,
+      instantPurchaseMax: instantPurchaseMax,
       showUnavailable: lbry.getClientSetting(settings.SHOW_UNAVAILABLE),
       language: lbry.getClientSetting(settings.LANGUAGE),
       clearingCache: false,
@@ -64,6 +70,23 @@ class SettingsPage extends React.PureComponent {
 
   onKeyFeeDisableChange(isDisabled) {
     this.setDaemonSetting("disable_max_key_fee", isDisabled);
+  }
+
+  onInstantPurchaseMaxEnabledChange(enabled) {
+    this.props.setClientSetting(
+      "instant_purchase_max",
+      this.state.instantPurchaseMax
+    );
+    this.setState({
+      instantPurchaseMaxEnabled: enabled,
+    });
+  }
+
+  onInstantPurchaseMaxChange(newValue) {
+    this.props.setClientSetting("instant_purchase_max", newValue);
+    this.setState({
+      instantPurchaseMax: newValue,
+    });
   }
 
   // onMaxUploadPrefChange(isLimited) {
@@ -197,6 +220,47 @@ class SettingsPage extends React.PureComponent {
               {__(
                 "This will prevent you from purchasing any content over this cost, as a safety measure."
               )}
+            </div>
+          </div>
+        </section>
+
+        <section className="card">
+          <div className="card__content">
+            <h3>{__("Instant Purchase")}</h3>
+          </div>
+          <div className="card__content">
+            <div className="form-row">
+              <FormField
+                type="radio"
+                name="instant_purchase_max"
+                checked={!this.state.instantPurchaseMaxEnabled}
+                label={__("Always ask before downloading content")}
+                onClick={e => {
+                  this.onInstantPurchaseMaxEnabledChange(false);
+                }}
+              />
+            </div>
+            <div className="form-row">
+              <FormField
+                type="radio"
+                name="instant_purchase_max"
+                checked={this.state.instantPurchaseMaxEnabled}
+                label={
+                  this.state.instantPurchaseMaxEnabled
+                    ? __("Don't ask to download content cheaper than")
+                    : __("Don't ask before downloading low-cost content...")
+                }
+                onClick={e => {
+                  this.onInstantPurchaseMaxEnabledChange(true);
+                }}
+              />
+              {this.state.instantPurchaseMaxEnabled &&
+                <FormFieldPrice
+                  min="0.1"
+                  step="0.1"
+                  onChange={val => this.onInstantPurchaseMaxChange(val)}
+                  value={this.state.instantPurchaseMax}
+                />}
             </div>
           </div>
         </section>
