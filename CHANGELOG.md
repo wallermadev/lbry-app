@@ -8,7 +8,7 @@ Web UI version numbers should always match the corresponding version of LBRY App
 
 ## [Unreleased]
 ### Added
-  *
+  * Added drag and drop feature in publish page to get file info.
   *
 
 ### Changed
@@ -16,7 +16,7 @@ Web UI version numbers should always match the corresponding version of LBRY App
   *
 
 ### Fixed
-  *
+  * Dragging and dropping anything in the app would open that file, requiring restart to fix.
   *
 
 ### Deprecated
