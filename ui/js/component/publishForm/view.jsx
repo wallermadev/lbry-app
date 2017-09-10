@@ -116,7 +116,7 @@ class PublishForm extends React.PureComponent {
           ? { channel_name: this.state.channel }
           : {}),
       };
-      
+
       const { source } = this.state;
 
       if (this.refs.file.getValue() !== "") {
@@ -262,7 +262,7 @@ class PublishForm extends React.PureComponent {
   }
 
   handlePrefillClicked() {
-    const claimInfo = this.myClaimInfo();  
+    const claimInfo = this.myClaimInfo();
     const { source } = claimInfo.value.stream;
     const {
       license,
@@ -492,6 +492,35 @@ class PublishForm extends React.PureComponent {
     });
   }
 
+  handleFileSelect(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+
+    // FileList object.
+    var file = evt.dataTransfer.files;
+
+    // file is a FileList of File objects.
+    let f = file[0];
+
+    this.setState({
+      source: f.path,
+      hasFile: true,
+    });
+
+    // This doesn't work, but we need to be able to do this, or something else to display it in the UI.
+    this.refs.file.value = f.path;
+    console.log(this.refs.file.getValue());
+    let fileName = this._getFileName(f.path);
+    this.nameChanged(fileName);
+  }
+
+  handleDragOver(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    // Explicitly show this is a copy.
+    evt.dataTransfer.dropEffect = "copy";
+  }
+
   render() {
     const lbcInputHelp = __(
       "This LBC remains yours and the deposit can be undone at any time."
@@ -503,6 +532,8 @@ class PublishForm extends React.PureComponent {
           onSubmit={event => {
             this.handleSubmit(event);
           }}
+          onDragOver={this.handleDragOver.bind(this)}
+          onDrop={this.handleFileSelect.bind(this)}
         >
           <section className="card">
             <div className="card__title-primary">
