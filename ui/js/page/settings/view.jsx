@@ -15,15 +15,11 @@ class SettingsPage extends React.PureComponent {
 
     const { daemonSettings } = this.props || {};
 
-    const instantPurchaseMax = lbry.getClientSetting(
-      "instant_purchase_max"
-    ) || { currency: "LBC", amount: 0.1 };
-
     this.state = {
       // isMaxUpload: daemonSettings && daemonSettings.max_upload != 0,
       // isMaxDownload: daemonSettings && daemonSettings.max_download != 0,
-      instantPurchaseMaxEnabled: instantPurchaseMax !== null,
-      instantPurchaseMax: instantPurchaseMax,
+      instantPurchaseEnabled: lbry.getClientSetting("instantPurchaseEnabled"),
+      instantPurchaseMax: lbry.getClientSetting("instantPurchaseMax"),
       showUnavailable: lbry.getClientSetting(settings.SHOW_UNAVAILABLE),
       language: lbry.getClientSetting(settings.LANGUAGE),
       clearingCache: false,
@@ -72,18 +68,17 @@ class SettingsPage extends React.PureComponent {
     this.setDaemonSetting("disable_max_key_fee", isDisabled);
   }
 
-  onInstantPurchaseMaxEnabledChange(enabled) {
-    this.props.setClientSetting(
-      "instant_purchase_max",
-      this.state.instantPurchaseMax
-    );
+  oninstantPurchaseEnabledChange(enabled) {
+    this.props.setClientSetting("instantPurchaseEnabled", enabled);
+
     this.setState({
-      instantPurchaseMaxEnabled: enabled,
+      instantPurchaseEnabled: enabled,
     });
   }
 
   onInstantPurchaseMaxChange(newValue) {
-    this.props.setClientSetting("instant_purchase_max", newValue);
+    this.props.setClientSetting("instantPurchaseMax", newValue);
+
     this.setState({
       instantPurchaseMax: newValue,
     });
@@ -233,10 +228,10 @@ class SettingsPage extends React.PureComponent {
               <FormField
                 type="radio"
                 name="instant_purchase_max"
-                checked={!this.state.instantPurchaseMaxEnabled}
+                checked={!this.state.instantPurchaseEnabled}
                 label={__("Always ask before downloading content")}
                 onClick={e => {
-                  this.onInstantPurchaseMaxEnabledChange(false);
+                  this.oninstantPurchaseEnabledChange(false);
                 }}
               />
             </div>
@@ -244,22 +239,22 @@ class SettingsPage extends React.PureComponent {
               <FormField
                 type="radio"
                 name="instant_purchase_max"
-                checked={this.state.instantPurchaseMaxEnabled}
+                checked={this.state.instantPurchaseEnabled}
                 label={
-                  this.state.instantPurchaseMaxEnabled
+                  this.state.instantPurchaseEnabled
                     ? __("Don't ask to download content cheaper than")
                     : __("Don't ask before downloading low-cost content...")
                 }
                 onClick={e => {
-                  this.onInstantPurchaseMaxEnabledChange(true);
+                  this.oninstantPurchaseEnabledChange(true);
                 }}
               />
-              {this.state.instantPurchaseMaxEnabled &&
+              {this.state.instantPurchaseEnabled &&
                 <FormFieldPrice
                   min="0.1"
                   step="0.1"
                   onChange={val => this.onInstantPurchaseMaxChange(val)}
-                  value={this.state.instantPurchaseMax}
+                  defaultValue={this.state.instantPurchaseMax}
                 />}
             </div>
           </div>

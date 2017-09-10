@@ -39,7 +39,8 @@ let lbry = {
     customLighthouseServers: [],
     showDeveloperMenu: false,
     language: "en",
-    instantPurchaseMax: null,
+    instantPurchaseEnabled: false,
+    instantPurchaseMax: { currency: "LBC", amount: 0.1 },
   },
 };
 
