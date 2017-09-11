@@ -16,9 +16,14 @@ const WalletSend = props => {
     error,
   } = props;
 
+  const handleSubmit = event => {
+    event.preventDefault();
+    sendToAddress();
+  };
+
   return (
     <section className="card">
-      <form onSubmit={sendToAddress}>
+      <form onSubmit={event => handleSubmit(event)}>
         <div className="card__title-primary">
           <h3>{__("Send Credits")}</h3>
         </div>
@@ -51,7 +56,6 @@ const WalletSend = props => {
               label={__("Send")}
               disabled={!(parseFloat(amount) > 0.0) || !address}
             />
-            <input type="submit" className="hidden" />
           </div>
         </div>
       </form>
