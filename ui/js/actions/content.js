@@ -342,8 +342,23 @@ export function doPurchaseUri(uri, purchaseModalName) {
     const costInfo = selectCostInfoForUri(state, { uri });
     const { cost } = costInfo;
 
-    // the file is free or we have partially downloaded it
-    if (cost === 0 || (fileInfo && fileInfo.download_directory)) {
+    /**
+     * Play video without a price warning dialog if:
+     *  - The file is free
+     *  - Instant purchase is enabled and the file is cheap enough
+     *  - The file is already downloading
+     */
+    const instantPurchaseEnabled = lbry.getClientSetting(
+      "instantPurchaseEnabled"
+    );
+    const instantPurchaseMax = lbry.getClientSetting("instantPurchaseMax")[
+      "amount"
+    ];
+    if (
+      cost === 0 ||
+      (instantPurchaseEnabled && cost <= instantPurchaseMax) ||
+      (fileInfo && fileInfo.download_directory)
+    ) {
       dispatch(doLoadVideo(uri));
       return Promise.resolve();
     }
