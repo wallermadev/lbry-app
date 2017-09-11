@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "component/link";
+import Submit from "component/submit";
 import Modal from "modal/modal";
 import { FormRow } from "component/form";
 import lbryuri from "lbryuri";
@@ -47,10 +47,8 @@ const WalletSend = props => {
             trim={true}
           />
           <div className="form-row-submit">
-            <Link
-              button="primary"
+            <Submit
               label={__("Send")}
-              onClick={sendToAddress}
               disabled={!(parseFloat(amount) > 0.0) || !address}
             />
             <input type="submit" className="hidden" />

@@ -11,6 +11,12 @@ body
   line-height: $font-line-height;
 }
 
+.submit {
+    border: 0;
+    font-family: inherit;
+    
+}
+
 #window
 {
   min-height: 100vh;
