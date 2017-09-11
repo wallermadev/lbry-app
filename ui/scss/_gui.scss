@@ -5,16 +5,11 @@ html
   height: 100%;
   font-size: $font-size;
 }
+
 body
 {
   font-family: 'Source Sans Pro', sans-serif;
   line-height: $font-line-height;
-}
-
-.submit {
-    border: 0;
-    font-family: inherit;
-    
 }
 
 #window
@@ -31,6 +26,7 @@ body
   color: white;
   border-radius: 2px;
 }
+
 .credit-amount--indicator
 {
   font-weight: bold;
@@ -53,6 +49,7 @@ body
     width: $width-page-constrained;
   }
 }
+
 main.main--refreshing {
   &:before {
     $width: 30px;
