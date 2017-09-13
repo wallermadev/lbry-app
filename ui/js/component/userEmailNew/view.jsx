@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "component/link";
-import { FormRow } from "component/form.js";
+import { Form, FormRow, Submit } from "component/form.js";
 
 class UserEmailNew extends React.PureComponent {
   constructor(props) {
@@ -17,8 +17,7 @@ class UserEmailNew extends React.PureComponent {
     });
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+  handleSubmit() {
     this.props.addUserEmail(this.state.email);
   }
 
@@ -26,11 +25,7 @@ class UserEmailNew extends React.PureComponent {
     const { errorMessage, isPending } = this.props;
 
     return (
-      <form
-        onSubmit={event => {
-          this.handleSubmit(event);
-        }}
-      >
+      <Form onSubmit={handleSubmit.bind(this)}>
         <p>
           {__(
             "This process is required to prevent abuse of the rewards program."
@@ -53,16 +48,9 @@ class UserEmailNew extends React.PureComponent {
           }}
         />
         <div className="form-row-submit">
-          <Link
-            button="primary"
-            label="Next"
-            disabled={isPending}
-            onClick={event => {
-              this.handleSubmit(event);
-            }}
-          />
+          <Submit label="Next" disabled={isPending} />
         </div>
-      </form>
+      </Form>
     );
   }
 }

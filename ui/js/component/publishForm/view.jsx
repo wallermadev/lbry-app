@@ -2,7 +2,7 @@ import React from "react";
 import lbry from "lbry";
 import lbryuri from "lbryuri";
 import FormField from "component/formField";
-import { FormRow } from "component/form.js";
+import { Form, FormRow, Submit } from "component/form.js";
 import Link from "component/link";
 import FormFieldPrice from "component/formFieldPrice";
 import Modal from "modal/modal";
@@ -57,11 +57,7 @@ class PublishForm extends React.PureComponent {
     if (!fetchingChannels) fetchChannelListMine();
   }
 
-  handleSubmit(event) {
-    if (typeof event !== "undefined") {
-      event.preventDefault();
-    }
-
+  handleSubmit() {
     this.setState({
       submitting: true,
     });
@@ -116,7 +112,7 @@ class PublishForm extends React.PureComponent {
           ? { channel_name: this.state.channel }
           : {}),
       };
-      
+
       const { source } = this.state;
 
       if (this.refs.file.getValue() !== "") {
@@ -262,7 +258,7 @@ class PublishForm extends React.PureComponent {
   }
 
   handlePrefillClicked() {
-    const claimInfo = this.myClaimInfo();  
+    const claimInfo = this.myClaimInfo();
     const { source } = claimInfo.value.stream;
     const {
       license,
@@ -493,20 +489,18 @@ class PublishForm extends React.PureComponent {
   }
 
   render() {
+    const { handleSubmit } = this;
+
     const lbcInputHelp = __(
       "This LBC remains yours and the deposit can be undone at any time."
     );
 
     return (
       <main className="main--single-column">
-        <form
-          onSubmit={event => {
-            this.handleSubmit(event);
-          }}
-        >
+        <Form onSubmit={handleSubmit.bind(this)}>
           <section className="card">
             <div className="card__title-primary">
-              <h4>{__("Content")}</h4>
+              vent) <h4>{__("Content")}</h4>
               <div className="card__subtitle">
                 {__("What are you publishing?")}
               </div>
@@ -837,14 +831,10 @@ class PublishForm extends React.PureComponent {
           </section>
 
           <div className="card-series-submit">
-            <Link
-              button="primary"
+            <Submit
               label={
                 !this.state.submitting ? __("Publish") : __("Publishing...")
               }
-              onClick={event => {
-                this.handleSubmit(event);
-              }}
               disabled={
                 this.state.submitting ||
                 (this.state.uri &&
@@ -859,9 +849,8 @@ class PublishForm extends React.PureComponent {
               onClick={this.props.back}
               label={__("Cancel")}
             />
-            <input type="submit" className="hidden" />
           </div>
-        </form>
+        </Form>
 
         <Modal
           isOpen={this.state.modal == "publishStarted"}

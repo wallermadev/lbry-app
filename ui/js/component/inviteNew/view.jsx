@@ -1,7 +1,6 @@
 import React from "react";
 import { BusyMessage, CreditAmount } from "component/common";
-import Submit from "component/submit";
-import { FormRow } from "component/form.js";
+import { Form, FormRow, Submit } from "component/form.js";
 
 class FormInviteNew extends React.PureComponent {
   constructor(props) {
@@ -18,16 +17,12 @@ class FormInviteNew extends React.PureComponent {
     });
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    this.props.inviteNew(this.state.email);
-  }
-
   render() {
-    const { errorMessage, isPending } = this.props;
+    const { errorMessage, isPending, inviteNew } = this.props;
+    const { email } = this.state;
 
     return (
-      <form onSubmit={event => this.handleSubmit(event)}>
+      <Form onSubmit={() => inviteNew(email)}>
         <FormRow
           type="text"
           label="Email"
@@ -42,7 +37,7 @@ class FormInviteNew extends React.PureComponent {
         <div className="form-row-submit">
           <Submit label={__("Send Invite")} disabled={isPending} />
         </div>
-      </form>
+      </Form>
     );
   }
 }
