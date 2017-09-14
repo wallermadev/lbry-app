@@ -10,7 +10,7 @@ class WalletSend extends React.PureComponent {
 
   handleSubmit() {
     const { amount, address, sendToAddress } = this.props;
-    const validSubmit = parseFloat(amount) > 0.0 || address;
+    const validSubmit = parseFloat(amount) > 0.0 && address;
 
     if (validSubmit) {
       sendToAddress();
