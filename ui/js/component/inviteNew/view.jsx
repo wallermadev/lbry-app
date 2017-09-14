@@ -17,12 +17,16 @@ class FormInviteNew extends React.PureComponent {
     });
   }
 
-  render() {
-    const { errorMessage, isPending, inviteNew } = this.props;
+  handleSubmit() {
     const { email } = this.state;
+    this.props.inviteNew(email);
+  }
+
+  render() {
+    const { errorMessage, isPending } = this.props;
 
     return (
-      <Form onSubmit={() => inviteNew(email)}>
+      <Form onSubmit={this.handleSubmit.bind(this)}>
         <FormRow
           type="text"
           label="Email"

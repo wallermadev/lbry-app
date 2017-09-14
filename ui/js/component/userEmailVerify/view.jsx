@@ -18,13 +18,14 @@ class UserEmailVerify extends React.PureComponent {
   }
 
   handleSubmit() {
-    this.props.verifyUserEmail(this.state.code);
+    const { code } = this.state;
+    this.props.verifyUserEmail(code);
   }
 
   render() {
     const { errorMessage, isPending } = this.props;
     return (
-      <Form onSubmit={handleSubmit.bind(this)}>
+      <Form onSubmit={this.handleSubmit.bind(this)}>
         <p>{__("Please enter the verification code emailed to you.")}</p>
         <FormRow
           type="text"

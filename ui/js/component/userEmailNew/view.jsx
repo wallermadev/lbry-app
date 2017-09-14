@@ -18,14 +18,15 @@ class UserEmailNew extends React.PureComponent {
   }
 
   handleSubmit() {
-    this.props.addUserEmail(this.state.email);
+    const { email } = this.state;
+    this.props.addUserEmail(email);
   }
 
   render() {
     const { errorMessage, isPending } = this.props;
 
     return (
-      <Form onSubmit={handleSubmit.bind(this)}>
+      <Form onSubmit={this.handleSubmit.bind(this)}>
         <p>
           {__(
             "This process is required to prevent abuse of the rewards program."

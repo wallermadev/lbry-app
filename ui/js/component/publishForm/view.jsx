@@ -489,15 +489,13 @@ class PublishForm extends React.PureComponent {
   }
 
   render() {
-    const { handleSubmit } = this;
-
     const lbcInputHelp = __(
       "This LBC remains yours and the deposit can be undone at any time."
     );
 
     return (
       <main className="main--single-column">
-        <Form onSubmit={handleSubmit.bind(this)}>
+        <Form onSubmit={this.handleSubmit.bind(this)}>
           <section className="card">
             <div className="card__title-primary">
               vent) <h4>{__("Content")}</h4>
