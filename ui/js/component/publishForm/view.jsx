@@ -498,7 +498,7 @@ class PublishForm extends React.PureComponent {
         <Form onSubmit={this.handleSubmit.bind(this)}>
           <section className="card">
             <div className="card__title-primary">
-              vent) <h4>{__("Content")}</h4>
+              <h4>{__("Content")}</h4>
               <div className="card__subtitle">
                 {__("What are you publishing?")}
               </div>
